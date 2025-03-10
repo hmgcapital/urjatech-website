@@ -9,21 +9,21 @@ const featuredProducts = [
     name: "AAC (All Aluminum Conductor)",
     description:
       "High electrical conductivity with excellent corrosion resistance for urban distribution networks.",
-    image: "/AAC.png",
+    image: "/products/AAC.webp",
     features: ["High conductivity", "Corrosion resistant", "Light weight"],
   },
   {
     name: "AAAC (All Aluminum Alloy Conductor)",
     description:
       "Superior strength-to-weight ratio and enhanced mechanical properties for medium-span transmission.",
-    image: "/AAAC.png",
+    image: "/products/AAAC.webp",
     features: ["Superior strength", "Better sag", "Coastal area use"],
   },
   {
     name: "ACSR (Aluminum Conductor Steel Reinforced)",
     description:
       "Steel core for mechanical strength and aluminum outer layer for conductivity. Ideal for high-voltage transmission.",
-    image: "/ACSR.png",
+    image: "/products/ACSR.webp",
     features: ["High tensile strength", "1200A rating", "Heavy loading"],
   },
 ];

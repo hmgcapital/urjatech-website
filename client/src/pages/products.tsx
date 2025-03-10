@@ -12,7 +12,7 @@ const conductors = [
     name: "ACSR Conductors",
     description:
       "Aluminum Conductor Steel Reinforced, designed for overhead transmission and distribution lines.",
-    image: "/ACSR.png",
+    image: "/products/ACSR.webp",
     specs: [
       "High tensile strength",
       "Excellent conductivity",
@@ -28,7 +28,7 @@ const conductors = [
     name: "AAC Conductors",
     description:
       "All Aluminum Conductors, offering high electrical conductivity and corrosion resistance.",
-    image: "/AAC.png",
+    image: "/products/AAC.webp",
     specs: [
       "Higher conductivity than ACSR",
       "Lighter weight",
@@ -44,7 +44,7 @@ const conductors = [
     name: "AAAC Conductors",
     description:
       "All Aluminum Alloy Conductors with balanced mechanical strength and electrical performance.",
-    image: "/AAAC.png",
+    image: "/products/AAAC.webp",
     specs: [
       "Higher strength than AAC",
       "Excellent corrosion resistance",
@@ -60,7 +60,7 @@ const conductors = [
     name: "ACCC Conductors",
     description:
       "Aluminum Conductor Alloy Reinforced, offering improved ampacity and mechanical strength.",
-    image: "/ACCC.png",
+    image: "/products/ACCC.webp",
     specs: [
       "High current carrying capacity",
       "Good mechanical strength",
@@ -79,7 +79,7 @@ const cables = [
     name: "XLPE Insulated Power Cables",
     description:
       "High-quality cross-linked polyethylene insulated cables for reliable power distribution.",
-    image: "/AluminiumCable.png",
+    image: "/products/AluminiumCable.webp",
     specs: [
       "Cross-linked polyethylene insulation",
       "Voltage grades: 0.6/1kV to 33kV",
@@ -95,7 +95,7 @@ const cables = [
     name: "Aerial Bundled Cables",
     description:
       "Self-supporting insulated overhead cables for reliable distribution in challenging environments.",
-    image: "/LT_Aerial_Bunched_Cable.png",
+    image: "/products/LT_Aerial_Bunched_Cable.webp",
     specs: [
       "Insulated phase conductors",
       "Bare or insulated neutral",
@@ -144,7 +144,7 @@ export default function Products() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-6">
               <a
-                href="/Urjatech Conductor Product Line .pdf"
+                href="/products/product-catalog.pdf"
                 target="_blank"
                 className="w-full sm:w-auto"
               >

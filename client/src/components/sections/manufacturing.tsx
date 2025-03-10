@@ -8,28 +8,28 @@ const features = [
     title: "State-of-the-art Manufacturing",
     description:
       "Our modern factory floor features advanced equipment for precise cable and conductor production with minimal tolerances.",
-    image: "/AAC.png", // Updated image as manufacturing-1.jpg isn't working
+    image: "home/state.webp", // Updated image as manufacturing-1.jpg isn't working
   },
   {
     icon: Shield,
     title: "QUALITY ASSURANCE",
     description:
       "Every product undergoes rigorous inspection and testing to ensure the highest level of reliability and safety.",
-    image: "/manufacturing-2.jpg", // Quality control inspection with testing equipment
+    image: "/home/manufacturing-2.webp", // Quality control inspection with testing equipment
   },
   {
     icon: Zap,
     title: "Advanced Technology",
     description:
       "We utilize the latest technological innovations in our production lines for superior electrical performance.",
-    image: "/manufacturing-3.jpg", // Advanced machinery for electrical cable manufacturing
+    image: "/home/manufacturing-3.webp", // Advanced machinery for electrical cable manufacturing
   },
   {
     icon: Award,
     title: "Industry Standards",
     description:
       "Our processes and products meet or exceed international safety and quality standards like ISO and IEC.",
-    image: "/ACSR.png", // Updated image as manufacturing-4.jpg isn't working
+    image: "/home/compliance.webp", // Updated image as manufacturing-4.jpg isn't working
   },
 ];
 

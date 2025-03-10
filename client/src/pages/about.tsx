@@ -8,14 +8,12 @@ export default function About() {
     {
       name: "Shray Gupta",
       position: "Managing Director",
-      image: "/shray.png",
-      bio: "Leading Urjatech's vision with over 15 years of experience in power solutions.",
+      image: "about/shray.webp",
     },
     {
-      name: "Arjun Mehta",
-      position: "Chief Technology Officer",
-      image: "/shray.png", // Using placeholder image
-      bio: "Driving innovation in cable technology with expertise in electrical engineering.",
+      name: "Mahesh Kumar",
+      position: "Managing Director",
+      image: "about/mahesh.webp",
     },
   ];
   return (
@@ -56,7 +54,7 @@ export default function About() {
                 <p className="text-gray-700">
                   {" "}
                   {/* Changed text color to gray */}
-                  Founded in 1995, Urjatech has grown from a small local
+                  Founded in 2011, Urjatech has grown from a small local
                   manufacturer to a global leader in power cable solutions. Our
                   journey has been marked by continuous innovation and
                   unwavering commitment to quality.
@@ -76,10 +74,10 @@ export default function About() {
                 <p className="text-gray-700">
                   {" "}
                   {/* Changed text color to gray */}
-                  To provide innovative and reliable power cable solutions that
-                  enable our customers to achieve their goals while maintaining
-                  the highest standards of quality and safety.
-                </p>
+                  With our moto of Delivering Best, we are determined to provide transmission cable required to
+                  power and empower next generation of India and other countries. We want to connect
+                  everyone with cheap electricity supply with a well maintained smart transmission grid network.
+                  </p>
               </CardContent>
             </Card>
           </div>
@@ -205,9 +203,8 @@ export default function About() {
                 <p className="text-gray-700 max-w-2xl mx-auto">
                   {" "}
                   {/* Changed text color to gray */}
-                  Since our founding, we've led the industry with quality
-                  products and extensive reach. Delivering excellence and
-                  empowering communities across the globe.
+                  Starting from 2011, we have achieved milestones
+that we wish to take forward.
                 </p>
               </div>
 
@@ -215,9 +212,9 @@ export default function About() {
                 {/* First Row - Always 3 items */}
                 <div className="flex flex-wrap justify-center gap-4 w-full">
                   {[
-                    { number: 25, label: "Years Experience", suffix: "+" },
-                    { number: 120, label: "Projects Completed", suffix: "+" },
-                    { number: 35, label: "Countries Served", suffix: "+" },
+                    { number: 15, label: "States Covered", suffix: "" },
+                    { number: 834814, label: "houses electrified", suffix: "+" },
+                    { number: 40, label: "Happy customers", suffix: "+" },
                   ].map((stat, index) => (
                     <motion.div
                       key={index}
@@ -240,9 +237,8 @@ export default function About() {
                 {/* Second Row */}
                 <div className="flex flex-wrap justify-center gap-4 w-full">
                   {[
-                    { number: 450, label: "Satisfied Clients", suffix: "+" },
-                    { number: 500, label: "Team Members", suffix: "+" },
-                    { number: 98, label: "Customer Satisfaction", suffix: "%" },
+                    { number: 38000, label: "Miles supplied ", suffix: "+" },
+                    { number: 100, label: "Team Members", suffix: "+" },
                   ].map((stat, index) => (
                     <motion.div
                       key={index}

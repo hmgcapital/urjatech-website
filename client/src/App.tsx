@@ -5,6 +5,7 @@ import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import Dashboard from "@/pages/dashboard";
 import About from "@/pages/about";
 import Products from "@/pages/products";
 import Contact from "@/pages/contact";
@@ -21,7 +22,6 @@ function ScrollToTop() {
   return null;
 }
 
-
 function Router() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -32,6 +32,7 @@ function Router() {
           <Route path="/products" component={Products} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route component={NotFound} />
         </Switch>
       </main>

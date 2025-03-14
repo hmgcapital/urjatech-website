@@ -6,11 +6,11 @@ import { Card } from "@/components/ui/card";
 
 const featuredProducts = [
   {
-    name: "AAC (All Aluminum Conductor)",
+    name: "AL59 Conductors",
     description:
       "High electrical conductivity with excellent corrosion resistance for urban distribution networks.",
-    image: "/products/AAC.webp",
-    features: ["High conductivity", "Corrosion resistant", "Light weight"],
+    image: "/products/AL59.webp",
+    features: ["High conductivity", "Excellent corrosion resistance", "Lightweight with reduced sag"],
   },
   {
     name: "AAAC (All Aluminum Alloy Conductor)",

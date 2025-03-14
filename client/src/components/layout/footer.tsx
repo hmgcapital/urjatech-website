@@ -77,8 +77,7 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Products</h4>
             <ul className="space-y-2 text-gray-600">
-              <li>Power Cables</li>
-              <li>Control Cables</li>
+              <li>XLPE Power Cables</li>
               <li>Traditional Conductors</li>
               <li>High performance and HTLS conductors</li>
             </ul>

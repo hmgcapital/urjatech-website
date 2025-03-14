@@ -72,6 +72,22 @@ const conductors = [
       "Long-span transmission",
     ],
   },
+  {
+    name: "AL59 Conductors",
+    description:
+      "High-strength, aluminum-magnesium-silicon alloy conductors.",
+    image: "/products/AL59.webp",
+    specs: [
+      "Higher conductivity than ACSR",
+      "Lighter weight",
+      "Corrosion resistant",
+    ],
+    applications: [
+      "Distribution network infrastructure",
+      "Corrosion-prone coastal areas",
+      "Overhead power transmission lines",
+    ],
+  },
 ];
 
 const cables = [

@@ -7,12 +7,12 @@ export default function About() {
   const leadership = [
     {
       name: "Shray Gupta",
-      position: "Managing Director",
+      position: "Director",
       image: "about/shray.webp",
     },
     {
       name: "Mahesh Kumar",
-      position: "Managing Director",
+      position: "Director",
       image: "about/mahesh.webp",
     },
   ];
@@ -35,9 +35,7 @@ export default function About() {
 
           <div className="prose prose-lg max-w-none mb-12">
             <p className="text-gray-700 text-lg">
-              Urjatech is a leading manufacturer of power cables and electrical
-              solutions, serving industries worldwide with high-quality products
-              and innovative solutions.
+            Urjatech is a leading manufacturer of power cables, conductors and electrical solutions, serving industries worldwide with high-quality products and innovative solutions with sustainability first approach.
             </p>
           </div>
 
@@ -48,23 +46,17 @@ export default function About() {
               <CardContent className="p-6">
                 <h2 className="text-3xl font-black mb-4 text-gray-900">
                   {" "}
-                  {/* Changed text color to dark gray */}
                   Our History
                 </h2>
                 <p className="text-gray-700">
                   {" "}
-                  {/* Changed text color to gray */}
-                  Founded in 2011, Urjatech has grown from a small local
-                  manufacturer to a global leader in power cable solutions. Our
-                  journey has been marked by continuous innovation and
-                  unwavering commitment to quality.
+                  Founded in 2011, Urjatech has grown from a small local manufacturer to a global leader in power cable and transmission solutions. Our journey has been marked by continuous innovation and unwavering commitment to quality and delivery.
                 </p>
               </CardContent>
             </Card>
 
             <Card className="rounded-none border-2 border-gray-200 bg-white">
               {" "}
-              {/* Changed background and border color */}
               <CardContent className="p-6">
                 <h2 className="text-3xl font-black mb-4 text-gray-900">
                   {" "}
@@ -73,10 +65,7 @@ export default function About() {
                 </h2>
                 <p className="text-gray-700">
                   {" "}
-                  {/* Changed text color to gray */}
-                  With our moto of Delivering Best, we are determined to provide transmission cable required to
-                  power and empower next generation of India and other countries. We want to connect
-                  everyone with cheap electricity supply with a well maintained smart transmission grid network.
+                  With our moto of Delivering Best, we are determined to provide transmission cable and conductors required to power and empower our next generation smart grids and distribution networks. We want to connect everyone with cheap and sustainable electricity supply with a well maintained smart transmission grid network.
                   </p>
               </CardContent>
             </Card>
@@ -148,7 +137,7 @@ export default function About() {
                       solutions that empower industries across the globe."
                     </h3>
                     <p className="text-[#01AEEF] font-bold text-xl">
-                      — Shray Gupta, Managing Director
+                      — Shray Gupta, Director
                     </p>
                   </div>
                 </motion.div>

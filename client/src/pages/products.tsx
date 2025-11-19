@@ -123,6 +123,22 @@ const cables = [
       "Coastal areas with high salt spray",
     ],
   },
+  {
+    name: "Medium Voltage Covered Conductor",
+    description:
+      "Triple-layered insulation protects the core conductor from environmental hazards and accidental contact, dramatically reducing power outages and enhancing grid reliability for 11kv and 33kv distribution systems",
+    image: "/products/MVCC.webp",
+    specs: [
+      "Anti-tracking",
+      "AAAC, ACS, AL59",
+      "UV resistant outer sheath",
+    ],
+    applications: [
+      "Urban & Congested Areas",
+      "Forest, Rural & Wind-Prone Regions",
+      "Industrial & Commercial Zones",
+    ],
+  },
   // {
   //   name: "Low Voltage Power Cables",
   //   description:
@@ -196,9 +212,9 @@ export default function Products() {
               }}
             >
               <div className="text-center mb-8">
-                <h2 className="section-heading text-black">Power Cables</h2>
+                <h2 className="section-heading text-black">Cables</h2>
                 <p className="text-black mb-4 max-w-3xl mx-auto">
-                  Our power cables deliver reliable power distribution with
+                  Our cables deliver reliable power distribution with
                   excellent thermal and electrical characteristics for various
                   industrial applications and electric utilities.
                 </p>

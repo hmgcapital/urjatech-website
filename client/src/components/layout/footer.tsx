@@ -71,6 +71,9 @@ export default function Footer() {
               <li>
                 <Link href="/contact" className="text-gray-600 hover:text-blue-500 transition-colors">Contact</Link>
               </li>
+              <li>
+                <Link href="/careers" className="text-gray-600 hover:text-blue-500 transition-colors">Careers</Link>
+              </li>
             </ul>
           </div>
 

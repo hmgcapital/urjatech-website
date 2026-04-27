@@ -17,6 +17,7 @@ const navItems = [
   { href: "/about", label: "About" },
   { href: "/products", label: "Products" },
   { href: "/contact", label: "Contact" },
+  { href: "/careers", label: "Careers" },
 ];
 
 export default function Navbar() {
@@ -40,7 +41,7 @@ export default function Navbar() {
   }, [location]);
 
   // Set white background for contact, products, and about pages
-  const isWhiteBgPage = location === "/about" || location === "/products" || location === "/contact";
+  const isWhiteBgPage = location === "/about" || location === "/products" || location === "/contact" || location === "/careers";
   
   // Set initial text color based on current page
   useEffect(() => {

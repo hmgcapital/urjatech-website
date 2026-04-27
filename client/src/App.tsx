@@ -9,6 +9,7 @@ import Dashboard from "@/pages/dashboard";
 import About from "@/pages/about";
 import Products from "@/pages/products";
 import Contact from "@/pages/contact";
+import Careers from "@/pages/careers";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
 
@@ -32,6 +33,7 @@ function Router() {
           <Route path="/products" component={Products} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
+          <Route path="/careers" component={Careers} />
           <Route path="/dashboard" component={Dashboard} />
           <Route component={NotFound} />
         </Switch>

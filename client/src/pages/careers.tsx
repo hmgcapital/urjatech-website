@@ -208,7 +208,21 @@ function TextField({
 export default function Careers() {
   const { toast } = useToast();
   const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] || null;
+    setPhotoFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => setPhotoPreview(ev.target?.result as string);
+      reader.readAsDataURL(file);
+    } else {
+      setPhotoPreview(null);
+    }
+  }
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -297,10 +311,9 @@ export default function Careers() {
       fd.append("education", JSON.stringify(data.education));
       fd.append("experience", JSON.stringify(data.experience));
 
-      // Append resume file
-      if (resumeFile) {
-        fd.append("resume", resumeFile);
-      }
+      // Append files
+      if (resumeFile) fd.append("resume", resumeFile);
+      if (photoFile)  fd.append("photo",  photoFile);
 
       const res = await fetch("/api/careers/apply", { method: "POST", body: fd });
       const json = await res.json();
@@ -309,6 +322,8 @@ export default function Careers() {
         toast({ title: "Application Submitted!", description: "We'll review your application and get back to you soon." });
         form.reset();
         setResumeFile(null);
+        setPhotoFile(null);
+        setPhotoPreview(null);
       } else {
         toast({ title: "Submission Failed", description: json.message || "Please try again.", variant: "destructive" });
       }
@@ -356,11 +371,66 @@ export default function Careers() {
               <div className="bg-white border border-gray-200 rounded-sm p-6 shadow-sm">
                 <SectionHeader icon={User} title="Personal Details" />
                 <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <SelectField control={form.control} name="title" label="Title" options={["Mr.", "Mrs.", "Ms.", "Dr."]} />
-                    <div className="md:col-span-2">
-                      <TextField control={form.control} name="fullName" label="Full Name" placeholder="As per official documents" required />
+
+                  {/* Name row + Photo upload side-by-side */}
+                  <div className="flex flex-col md:flex-row gap-6">
+
+                    {/* Left: Name fields */}
+                    <div className="flex-1 space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <SelectField control={form.control} name="title" label="Title" options={["Mr.", "Mrs.", "Ms.", "Dr."]} />
+                        <div className="md:col-span-2">
+                          <TextField control={form.control} name="fullName" label="Full Name" placeholder="As per official documents" required />
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Right: Passport photo upload */}
+                    <div className="flex flex-col items-center gap-2 md:w-36">
+                      <span className="text-xs font-medium text-gray-700 self-start md:self-center">
+                        Passport Photo
+                      </span>
+
+                      {/* Preview box */}
+                      <label
+                        htmlFor="photo-upload"
+                        className="cursor-pointer group relative flex items-center justify-center w-28 h-36 border-2 border-dashed border-gray-300 rounded-sm overflow-hidden hover:border-[#01AEEF] transition-colors"
+                        title="Click to upload photo"
+                      >
+                        {photoPreview ? (
+                          <img
+                            src={photoPreview}
+                            alt="Candidate photo preview"
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="text-center text-gray-400 px-2">
+                            <User className="h-8 w-8 mx-auto mb-1 text-gray-300" />
+                            <span className="text-[10px] leading-tight">Click to upload<br/>JPG / PNG</span>
+                          </div>
+                        )}
+                        {/* Overlay on hover when photo already uploaded */}
+                        {photoPreview && (
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span className="text-white text-[10px] font-medium">Change photo</span>
+                          </div>
+                        )}
+                      </label>
+
+                      <input
+                        id="photo-upload"
+                        type="file"
+                        accept="image/jpeg,image/png,image/jpg"
+                        className="hidden"
+                        onChange={handlePhotoChange}
+                      />
+
+                      {photoFile && (
+                        <p className="text-[10px] text-green-600 text-center truncate w-28">✓ {photoFile.name}</p>
+                      )}
+                      <p className="text-[10px] text-gray-400 text-center">Max 5 MB</p>
+                    </div>
+
                   </div>
                   <FieldGrid>
                     <TextField control={form.control} name="dateOfBirth" label="Date of Birth" type="date" required />

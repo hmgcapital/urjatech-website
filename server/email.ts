@@ -55,7 +55,7 @@ const fieldLine = (label: string, value: string | undefined) =>
     <strong>${label}:</strong>&nbsp;${value || ""}
    </td></tr>`;
 
-export function buildApplicationEmail(data: Record<string, any>): string {
+export function buildApplicationEmail(data: Record<string, any>, hasPhoto = false): string {
   const edu: any[] = data.education || [];
   const exp: any[] = data.experience || [];
   const today = new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "2-digit", year: "numeric" });
@@ -201,10 +201,12 @@ export function buildApplicationEmail(data: Record<string, any>): string {
         </table>
       </td>
       <!-- Right: photo box -->
-      <td style="border:1px solid #000;width:25%;text-align:center;vertical-align:middle;padding:8px;font-size:11px;color:#888;">
-        <div style="border:1px dashed #aaa;width:80px;height:100px;margin:0 auto;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:10px;">
-          PHOTO
-        </div>
+      <td style="border:1px solid #000;width:25%;text-align:center;vertical-align:middle;padding:8px;">
+        ${hasPhoto
+          ? `<img src="cid:candidatephoto@urjatech" alt="Candidate Photo"
+               style="width:90px;height:110px;object-fit:cover;border:1px solid #ccc;display:block;margin:0 auto;"/>`
+          : `<div style="border:1px dashed #aaa;width:90px;height:110px;margin:0 auto;line-height:110px;color:#bbb;font-size:10px;">PHOTO</div>`
+        }
       </td>
     </tr>
   </table>

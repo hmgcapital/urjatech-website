@@ -5,23 +5,24 @@ import { createTransporter, buildApplicationEmail } from "./email";
 
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
-  fileFilter: (_req, file, cb) => {
-    const allowed = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"];
-    cb(null, allowed.includes(file.mimetype));
-  },
-});
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB per file
+}).fields([
+  { name: "resume", maxCount: 1 },
+  { name: "photo",  maxCount: 1 },
+]);
 
 export async function registerRoutes(app: Express): Promise<Server> {
 
   // POST /api/careers/apply
-  // Accepts multipart/form-data; sends all fields as a formatted email to shray@urjatech.com
-  app.post("/api/careers/apply", upload.single("resume"), async (req, res) => {
+  app.post("/api/careers/apply", upload, async (req, res) => {
     try {
       const data = req.body as Record<string, any>;
-      const resumeFile = req.file;
+      const files = req.files as Record<string, Express.Multer.File[]> | undefined;
 
-      // Parse JSON-encoded arrays (education, experience) sent as stringified JSON
+      const resumeFile = files?.["resume"]?.[0];
+      const photoFile  = files?.["photo"]?.[0];
+
+      // Parse JSON-encoded arrays
       for (const key of ["education", "experience"]) {
         if (typeof data[key] === "string") {
           try { data[key] = JSON.parse(data[key]); } catch { data[key] = []; }
@@ -29,28 +30,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const transporter = createTransporter();
-
-      // Verify SMTP connection
       await transporter.verify();
 
-      const mailOptions: Parameters<typeof transporter.sendMail>[0] = {
-        from: `"Urjatech Careers" <${process.env.SMTP_USER}>`,
-        to: "shray@urjatech.com",
-        replyTo: data.email || undefined,
-        subject: `Job Application: ${data.positionApplied || "General"} — ${data.fullName || "Unknown"}`,
-        html: buildApplicationEmail(data),
-        attachments: [],
-      };
+      const attachments: any[] = [];
 
+      // Photo — inline CID so it renders inside the email body
+      if (photoFile) {
+        attachments.push({
+          filename: photoFile.originalname,
+          content:  photoFile.buffer,
+          contentType: photoFile.mimetype,
+          cid: "candidatephoto@urjatech",   // referenced in HTML
+        });
+      }
+
+      // Resume — regular attachment
       if (resumeFile) {
-        (mailOptions.attachments as any[]).push({
+        attachments.push({
           filename: resumeFile.originalname,
-          content: resumeFile.buffer,
+          content:  resumeFile.buffer,
           contentType: resumeFile.mimetype,
         });
       }
 
-      await transporter.sendMail(mailOptions);
+      await transporter.sendMail({
+        from:    `"Urjatech Careers" <${process.env.SMTP_USER}>`,
+        to:      "shray@urjatech.com",
+        replyTo: data.email || undefined,
+        subject: `Job Application: ${data.positionApplied || "General"} — ${data.fullName || "Unknown"}`,
+        html:    buildApplicationEmail(data, !!photoFile),
+        attachments,
+      });
 
       res.json({ success: true, message: "Application submitted successfully." });
     } catch (err: any) {

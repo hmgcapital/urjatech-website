@@ -1,8 +1,9 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -16,7 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { PlusCircle, Trash2, Briefcase, GraduationCap, User, Phone, FileText, Users } from "lucide-react";
+import { PlusCircle, Trash2, Briefcase, GraduationCap, User, Phone, FileText, Users, MapPin, Clock, ChevronRight, ArrowLeft } from "lucide-react";
 
 // ─── Translations ─────────────────────────────────────────────────────────────
 
@@ -301,12 +302,54 @@ function TextField({ label, name, placeholder, required, control, type = "text",
   );
 }
 
+// ─── Job type ─────────────────────────────────────────────────────────────────
+
+interface Job {
+  id: string;
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  experience: string;
+  description: string;
+  responsibilities: string[];
+  requirements: string[];
+  active: boolean;
+}
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function Careers() {
   const { toast } = useToast();
   const [lang, setLang] = useState<Lang>("en");
   const t = T[lang];
+
+  // Which JD is expanded (accordion)
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  // null = listings view, "" = general application, "jobTitle" = specific JD
+  const [selectedPosition, setSelectedPosition] = useState<string | null>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  const { data: jobs = [], isLoading: jobsLoading } = useQuery<Job[]>({
+    queryKey: ["careers-jobs"],
+    queryFn: () => fetch("/api/careers/jobs").then((r) => r.json()),
+  });
+
+  function applyForJob(title: string) {
+    setSelectedPosition(title);
+    setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+  }
+
+  function applyGeneral() {
+    setSelectedPosition("");
+    setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+  }
+
+  function backToListings() {
+    setSelectedPosition(null);
+    setExpandedId(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
@@ -323,6 +366,13 @@ export default function Careers() {
       setPhotoPreview(null);
     }
   }
+
+  // Sync selectedPosition into the form field whenever it changes
+  useEffect(() => {
+    if (selectedPosition !== null) {
+      form.setValue("positionApplied", selectedPosition);
+    }
+  }, [selectedPosition]);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -399,7 +449,7 @@ export default function Careers() {
       <div className="container mx-auto px-6 py-12">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="max-w-4xl mx-auto">
 
-          {/* Title + language toggle */}
+          {/* ── PAGE HEADER ── */}
           <div className="flex items-start justify-between mb-3">
             <div className="flex-1">
               <h1 className="text-4xl font-bold text-gray-900 text-center">{t.pageTitle}</h1>
@@ -414,7 +464,178 @@ export default function Careers() {
             </button>
           </div>
 
-          <div className="mb-8" />
+          {/* ── JOB LISTINGS (shown when no position selected) ── */}
+          <AnimatePresence>
+            {selectedPosition === null && (
+              <motion.div
+                key="listings"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="mt-10 space-y-4"
+              >
+                {/* General application CTA */}
+                <div className="flex items-center justify-between bg-gray-50 border border-gray-200 rounded-sm px-5 py-4">
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {lang === "en" ? "Don't see a role that fits?" : "कोई उपयुक्त पद नहीं दिखा?"}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-0.5">
+                      {lang === "en"
+                        ? "Send us a general application and we'll be in touch."
+                        : "हमें एक सामान्य आवेदन भेजें, हम संपर्क करेंगे।"}
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    onClick={applyGeneral}
+                    className="flex-shrink-0 ml-4 font-black border-2 border-black text-black uppercase bg-transparent hover:bg-transparent hover:text-[#01AEEF] hover:border-[#01AEEF] rounded-none px-5 py-2 text-xs"
+                  >
+                    {lang === "en" ? "General Application" : "सामान्य आवेदन"}
+                  </Button>
+                </div>
+
+                {/* Divider */}
+                <div className="flex items-center gap-3 py-2">
+                  <div className="flex-1 h-px bg-gray-200" />
+                  <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                    {lang === "en" ? "Current Openings" : "वर्तमान रिक्तियां"}
+                  </span>
+                  <div className="flex-1 h-px bg-gray-200" />
+                </div>
+
+                {/* Job cards */}
+                {jobsLoading ? (
+                  <div className="text-center py-10 text-gray-400">
+                    {lang === "en" ? "Loading openings…" : "रिक्तियां लोड हो रही हैं…"}
+                  </div>
+                ) : jobs.length === 0 ? (
+                  <div className="text-center py-10 text-gray-400">
+                    {lang === "en" ? "No current openings. Check back soon!" : "अभी कोई रिक्ति नहीं है। जल्द देखें!"}
+                  </div>
+                ) : (
+                  jobs.map((job) => (
+                    <div key={job.id} className="border border-gray-200 rounded-sm overflow-hidden">
+                      {/* Card header — always visible */}
+                      <button
+                        type="button"
+                        onClick={() => setExpandedId(expandedId === job.id ? null : job.id)}
+                        className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors"
+                      >
+                        <div>
+                          <p className="font-black text-gray-900 text-base">{job.title}</p>
+                          <div className="flex flex-wrap gap-3 mt-1.5">
+                            <span className="flex items-center gap-1 text-xs text-gray-500">
+                              <Briefcase className="h-3 w-3" /> {job.department}
+                            </span>
+                            <span className="flex items-center gap-1 text-xs text-gray-500">
+                              <MapPin className="h-3 w-3" /> {job.location}
+                            </span>
+                            <span className="flex items-center gap-1 text-xs text-gray-500">
+                              <Clock className="h-3 w-3" /> {job.experience}
+                            </span>
+                            <span className="text-xs text-white bg-[#01AEEF] px-2 py-0.5 rounded-full">{job.type}</span>
+                          </div>
+                        </div>
+                        <ChevronRight className={`h-5 w-5 text-gray-400 flex-shrink-0 ml-3 transition-transform ${expandedId === job.id ? "rotate-90" : ""}`} />
+                      </button>
+
+                      {/* Expanded JD details */}
+                      <AnimatePresence>
+                        {expandedId === job.id && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-5 pb-5 border-t border-gray-100 space-y-4">
+                              <p className="text-sm text-gray-600 mt-4">{job.description}</p>
+
+                              {job.responsibilities?.length > 0 && (
+                                <div>
+                                  <p className="text-xs font-black uppercase text-gray-500 mb-1.5">
+                                    {lang === "en" ? "Responsibilities" : "जिम्मेदारियां"}
+                                  </p>
+                                  <ul className="space-y-1">
+                                    {job.responsibilities.map((r, i) => (
+                                      <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#01AEEF] flex-shrink-0" />
+                                        {r}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+
+                              {job.requirements?.length > 0 && (
+                                <div>
+                                  <p className="text-xs font-black uppercase text-gray-500 mb-1.5">
+                                    {lang === "en" ? "Requirements" : "आवश्यकताएं"}
+                                  </p>
+                                  <ul className="space-y-1">
+                                    {job.requirements.map((r, i) => (
+                                      <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gray-400 flex-shrink-0" />
+                                        {r}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+
+                              <Button
+                                type="button"
+                                onClick={() => applyForJob(job.title)}
+                                className="mt-2 font-black border-2 border-[#01AEEF] text-[#01AEEF] uppercase bg-transparent hover:bg-[#01AEEF] hover:text-white rounded-none px-6 py-2 text-xs flex items-center gap-2"
+                              >
+                                {lang === "en" ? `Apply for ${job.title}` : `${job.title} के लिए आवेदन करें`}
+                                <ChevronRight className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* ── APPLICATION FORM (shown when a position is selected) ── */}
+          <AnimatePresence>
+            {selectedPosition !== null && (
+              <motion.div
+                key="form"
+                ref={formRef}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="mt-8"
+              >
+                {/* Back button + banner */}
+                <div className="flex items-center gap-4 mb-6">
+                  <button
+                    type="button"
+                    onClick={backToListings}
+                    className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-[#01AEEF] transition-colors font-medium"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    {lang === "en" ? "Back to Openings" : "रिक्तियों पर वापस"}
+                  </button>
+                  {selectedPosition && (
+                    <span className="text-sm text-gray-400">
+                      {lang === "en" ? `Applying for: ` : `आवेदन: `}
+                      <span className="font-semibold text-gray-700">{selectedPosition}</span>
+                    </span>
+                  )}
+                </div>
+
+          <div className="mb-2" />
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
@@ -423,7 +644,7 @@ export default function Careers() {
               <div className="bg-white border border-gray-200 rounded-sm p-6 shadow-sm">
                 <SectionHeader icon={Briefcase} title={t.sec1} />
                 <FieldGrid>
-                  <TextField control={form.control} name="positionApplied" label={t.positionApplied} placeholder={t.positionPH} required />
+                  <TextField control={form.control} name="positionApplied" label={t.positionApplied} placeholder={t.positionPH} required readOnly={!!selectedPosition} />
                   <TextField control={form.control} name="referredBy" label={t.referredBy} placeholder={t.referredByPH} />
                   <SelectField control={form.control} name="employmentType" label={t.employmentType} options={t.employmentOpts as unknown as string[]} placeholder={t.selectPH} required />
                   <SelectField control={form.control} name="noticePeriod" label={t.noticePeriod} options={t.noticePeriodOpts as unknown as string[]} placeholder={t.selectPH} />
@@ -718,6 +939,10 @@ export default function Careers() {
 
             </form>
           </Form>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
         </motion.div>
       </div>
     </div>

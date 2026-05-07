@@ -1,0 +1,68 @@
+[
+  {
+    "id": "1",
+    "title": "Electrical Engineer",
+    "department": "Engineering",
+    "location": "Greater Noida, UP",
+    "type": "Full-time",
+    "experience": "2–5 years",
+    "description": "We are looking for a motivated Electrical Engineer to join our manufacturing team. You will be responsible for design, testing, and quality assurance of our conductor and cable products.",
+    "responsibilities": [
+      "Design and review electrical drawings and schematics",
+      "Conduct quality checks on conductors and cables",
+      "Coordinate with production and R&D teams",
+      "Ensure compliance with IS/IEC standards"
+    ],
+    "requirements": [
+      "B.Tech / B.E. in Electrical Engineering",
+      "2–5 years of experience in a manufacturing environment",
+      "Proficiency in AutoCAD and MS Office",
+      "Knowledge of IS/IEC standards for conductors and cables"
+    ],
+    "active": true
+  },
+  {
+    "id": "2",
+    "title": "Sales Executive",
+    "department": "Sales & Marketing",
+    "location": "Delhi / NCR",
+    "type": "Full-time",
+    "experience": "1–3 years",
+    "description": "We are hiring a Sales Executive to expand our customer base across power utilities, EPC contractors, and distribution companies.",
+    "responsibilities": [
+      "Identify and develop new business opportunities",
+      "Manage and grow existing customer accounts",
+      "Prepare proposals, quotations, and follow up on enquiries",
+      "Represent Urjatech at industry events and tender submissions"
+    ],
+    "requirements": [
+      "Bachelor's degree in any discipline (technical preferred)",
+      "1–3 years of B2B sales experience, preferably in electrical / power sector",
+      "Strong communication and negotiation skills",
+      "Willingness to travel within the assigned territory"
+    ],
+    "active": true
+  },
+  {
+    "id": "3",
+    "title": "Production Supervisor",
+    "department": "Manufacturing",
+    "location": "Greater Noida, UP",
+    "type": "Full-time",
+    "experience": "3–7 years",
+    "description": "Seeking an experienced Production Supervisor to oversee day-to-day manufacturing operations for our conductor and cable lines.",
+    "responsibilities": [
+      "Supervise and coordinate production shift operations",
+      "Monitor output, quality, and equipment utilisation",
+      "Ensure adherence to safety and quality standards",
+      "Train and guide shop-floor team members"
+    ],
+    "requirements": [
+      "Diploma / B.Tech in Electrical or Mechanical Engineering",
+      "3–7 years of experience in wire/cable or similar manufacturing",
+      "Strong knowledge of production planning and quality control",
+      "Ability to lead a team of 15–25 workers"
+    ],
+    "active": true
+  }
+]

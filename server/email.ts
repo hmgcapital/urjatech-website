@@ -1,10 +1,14 @@
 import nodemailer from "nodemailer";
 
 export function createTransporter() {
+  const port = parseInt(process.env.SMTP_PORT || "587", 10);
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp.gmail.com",
-    port: parseInt(process.env.SMTP_PORT || "587"),
-    secure: false,
+    port,
+    secure: port === 465,
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 20_000,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,

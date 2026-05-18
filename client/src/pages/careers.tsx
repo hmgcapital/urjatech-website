@@ -239,6 +239,37 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
+type ApplicationResponse = {
+  success?: boolean;
+  message?: string;
+  submissionId?: string;
+};
+
+const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
+const RESUME_EXTENSIONS = [".pdf", ".doc", ".docx"];
+const PHOTO_TYPES = ["image/jpeg", "image/png"];
+
+function getDefaultFormValues(): FormValues {
+  return {
+    positionApplied: "", referredBy: "", employmentType: "", expectedCTC: "", noticePeriod: "",
+    title: "", fullName: "", dateOfBirth: "", age: "", gender: "", maritalStatus: "",
+    numberOfSons: "", numberOfDaughters: "", placeOfBirth: "", nationality: "Indian",
+    guardianName: "", guardianOccupation: "", guardianMonthlyIncome: "",
+    mobile: "", alternatePhone: "", email: "", linkedIn: "",
+    presentAddress: "", sameAddress: false, permanentAddress: "",
+    education: [{ examination: "10th", institution: "", board: "", subject: "", year: "", percentage: "" }],
+    totalExperience: "", currentCTC: "", currentEmployer: "", experience: [],
+    keySkills: "", computerSkills: "", languagesKnown: "", certifications: "",
+    ref1Name: "", ref1Relationship: "", ref1Company: "", ref1Phone: "", ref1Email: "",
+    ref2Name: "", ref2Relationship: "", ref2Company: "", ref2Phone: "", ref2Email: "",
+    coverLetter: "", additionalRemarks: "", declaration: false,
+  };
+}
+
+function hasAllowedExtension(file: File, extensions: string[]) {
+  const lowerName = file.name.toLowerCase();
+  return extensions.some((extension) => lowerName.endsWith(extension));
+}
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -326,7 +357,7 @@ export default function Careers() {
 
   // Which JD is expanded (accordion)
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  // null = listings view, "" = general application, "jobTitle" = specific JD
+  // null = listings view, otherwise the selected application title
   const [selectedPosition, setSelectedPosition] = useState<string | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -341,7 +372,7 @@ export default function Careers() {
   }
 
   function applyGeneral() {
-    setSelectedPosition("");
+    setSelectedPosition("General Application");
     setTimeout(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
   }
 
@@ -354,9 +385,17 @@ export default function Careers() {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const submittingRef = useRef(false);
 
   function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] || null;
+    if (file && (file.size > MAX_UPLOAD_BYTES || !PHOTO_TYPES.includes(file.type))) {
+      e.target.value = "";
+      setPhotoFile(null);
+      setPhotoPreview(null);
+      toast({ title: t.errorTitle, description: "Photo must be a JPG or PNG file up to 5 MB.", variant: "destructive" });
+      return;
+    }
     setPhotoFile(file);
     if (file) {
       const reader = new FileReader();
@@ -365,6 +404,17 @@ export default function Careers() {
     } else {
       setPhotoPreview(null);
     }
+  }
+
+  function handleResumeChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] || null;
+    if (file && (file.size > MAX_UPLOAD_BYTES || !hasAllowedExtension(file, RESUME_EXTENSIONS))) {
+      e.target.value = "";
+      setResumeFile(null);
+      toast({ title: t.errorTitle, description: "Resume must be a PDF, DOC, or DOCX file up to 5 MB.", variant: "destructive" });
+      return;
+    }
+    setResumeFile(file);
   }
 
   // Sync selectedPosition into the form field whenever it changes
@@ -376,20 +426,7 @@ export default function Careers() {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      positionApplied: "", referredBy: "", employmentType: "", expectedCTC: "", noticePeriod: "",
-      title: "", fullName: "", dateOfBirth: "", age: "", gender: "", maritalStatus: "",
-      numberOfSons: "", numberOfDaughters: "", placeOfBirth: "", nationality: "Indian",
-      guardianName: "", guardianOccupation: "", guardianMonthlyIncome: "",
-      mobile: "", alternatePhone: "", email: "", linkedIn: "",
-      presentAddress: "", sameAddress: false, permanentAddress: "",
-      education: [{ examination: "10th", institution: "", board: "", subject: "", year: "", percentage: "" }],
-      totalExperience: "", currentCTC: "", currentEmployer: "", experience: [],
-      keySkills: "", computerSkills: "", languagesKnown: "", certifications: "",
-      ref1Name: "", ref1Relationship: "", ref1Company: "", ref1Phone: "", ref1Email: "",
-      ref2Name: "", ref2Relationship: "", ref2Company: "", ref2Phone: "", ref2Email: "",
-      coverLetter: "", additionalRemarks: "", declaration: false,
-    },
+    defaultValues: getDefaultFormValues(),
   });
 
   const { fields: eduFields, append: appendEdu, remove: removeEdu } = useFieldArray({ control: form.control, name: "education" });
@@ -412,32 +449,59 @@ export default function Careers() {
   }, [dob]);
 
   async function onSubmit(data: FormValues) {
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     setSubmitting(true);
     try {
-      if (data.sameAddress) data.permanentAddress = data.presentAddress;
+      const submissionData = {
+        ...data,
+        permanentAddress: data.sameAddress ? data.presentAddress : data.permanentAddress,
+        positionApplied: data.positionApplied.trim() || "General Application",
+      };
       const fd = new FormData();
-      for (const [key, value] of Object.entries(data)) {
+      for (const [key, value] of Object.entries(submissionData)) {
         if (key === "education" || key === "experience") continue;
         if (value !== undefined && value !== null) fd.append(key, String(value));
       }
-      fd.append("education", JSON.stringify(data.education));
-      fd.append("experience", JSON.stringify(data.experience));
+      fd.append("education", JSON.stringify(submissionData.education));
+      fd.append("experience", JSON.stringify(submissionData.experience));
       if (resumeFile) fd.append("resume", resumeFile);
       if (photoFile)  fd.append("photo",  photoFile);
 
-      const res  = await fetch("/api/careers/apply", { method: "POST", body: fd });
-      const json = await res.json();
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 30_000);
+      let res: Response;
+      try {
+        res = await fetch("/api/careers/apply", { method: "POST", body: fd, signal: controller.signal });
+      } finally {
+        window.clearTimeout(timeoutId);
+      }
+      const responseText = await res.text();
+      let json: ApplicationResponse = {};
+      if (responseText) {
+        try {
+          json = JSON.parse(responseText) as ApplicationResponse;
+        } catch {
+          json = {};
+        }
+      }
 
-      if (json.success) {
+      if (res.ok && json.success) {
         toast({ title: t.successTitle, description: t.successDesc });
-        form.reset();
+        form.reset({ ...getDefaultFormValues(), positionApplied: selectedPosition ?? "" });
         setResumeFile(null); setPhotoFile(null); setPhotoPreview(null);
       } else {
         toast({ title: t.errorTitle, description: json.message || "Please try again.", variant: "destructive" });
       }
-    } catch {
-      toast({ title: t.errorTitle, description: t.networkError, variant: "destructive" });
+    } catch (err) {
+      const message = err instanceof DOMException && err.name === "AbortError"
+        ? "The request timed out. Please check your connection and try again."
+        : err instanceof Error && err.message
+          ? err.message
+          : t.networkError;
+      toast({ title: t.errorTitle, description: message, variant: "destructive" });
     } finally {
+      submittingRef.current = false;
       setSubmitting(false);
     }
   }
@@ -901,7 +965,7 @@ export default function Careers() {
                       {t.resumeLabel} <span className="text-gray-500 font-normal">{t.resumeHint}</span>
                     </label>
                     <input type="file" accept=".pdf,.doc,.docx"
-                      onChange={(e) => setResumeFile(e.target.files?.[0] || null)}
+                      onChange={handleResumeChange}
                       className="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:border file:border-gray-300 file:text-sm file:font-medium file:bg-white file:text-gray-700 hover:file:border-[#01AEEF] hover:file:text-[#01AEEF] cursor-pointer"
                     />
                     {resumeFile && <p className="mt-1 text-xs text-green-600">✓ {resumeFile.name}</p>}

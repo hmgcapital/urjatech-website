@@ -162,7 +162,7 @@ const productSchema = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "name": "Urjatech Power Cables & Conductors",
-  "url": "https://urjatech.com/products",
+  "url": "https://capitalurjatech.com/products",
   "itemListElement": [
     ...cables.map((p, i) => ({
       "@type": "ListItem",
@@ -171,7 +171,7 @@ const productSchema = {
         "@type": "Product",
         "name": p.name,
         "description": p.description,
-        "image": `https://urjatech.com${p.image}`,
+        "image": `https://capitalurjatech.com${p.image}`,
         "brand": { "@type": "Brand", "name": "Urjatech" },
       },
     })),
@@ -182,7 +182,7 @@ const productSchema = {
         "@type": "Product",
         "name": p.name,
         "description": p.description,
-        "image": `https://urjatech.com${p.image}`,
+        "image": `https://capitalurjatech.com${p.image}`,
         "brand": { "@type": "Brand", "name": "Urjatech" },
       },
     })),

@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /dashboard
 
-Sitemap: https://urjatech.com/sitemap.xml
+Sitemap: https://capitalurjatech.com/sitemap.xml

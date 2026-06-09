@@ -7,7 +7,7 @@ interface SEOProps {
   ogImage?: string;
 }
 
-const BASE_URL = "https://urjatech.com";
+const BASE_URL = "https://capitalurjatech.com";
 const DEFAULT_IMAGE = `${BASE_URL}/factory.webp`;
 
 function setMeta(name: string, content: string, property = false) {

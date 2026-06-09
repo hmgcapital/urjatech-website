@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { Counter } from "@/components/counter";
+import { useSEO } from "@/hooks/use-seo";
 
 // Product data remains unchanged
 const conductors = [
@@ -157,9 +158,50 @@ const cables = [
   // },
 ];
 
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Urjatech Power Cables & Conductors",
+  "url": "https://urjatech.com/products",
+  "itemListElement": [
+    ...cables.map((p, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "Product",
+        "name": p.name,
+        "description": p.description,
+        "image": `https://urjatech.com${p.image}`,
+        "brand": { "@type": "Brand", "name": "Urjatech" },
+      },
+    })),
+    ...conductors.map((p, i) => ({
+      "@type": "ListItem",
+      "position": cables.length + i + 1,
+      "item": {
+        "@type": "Product",
+        "name": p.name,
+        "description": p.description,
+        "image": `https://urjatech.com${p.image}`,
+        "brand": { "@type": "Brand", "name": "Urjatech" },
+      },
+    })),
+  ],
+};
+
 export default function Products() {
+  useSEO({
+    title: "Products | ACSR, AAC, XLPE Cables & Conductors",
+    description:
+      "Explore Urjatech's full range: ACSR, AAC, AAAC, ACCC, AL59 aluminum conductors and XLPE insulated cables, aerial bundled cables, and medium voltage covered conductors for power transmission and distribution.",
+    canonical: "/products",
+  });
   return (
     <div style={{ background: "#ffffff" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
       <div className="container mx-auto px-6 py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -2,8 +2,15 @@ import { motion } from "framer-motion";
 import { Shield, Award, Factory, Zap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Counter } from "@/components/counter";
+import { useSEO } from "@/hooks/use-seo";
 
 export default function About() {
+  useSEO({
+    title: "About Us | Power Cable Manufacturer Since 2011",
+    description:
+      "Founded in 2011, Urjatech has grown into a trusted manufacturer of power cables and conductors. Discover our history, mission, leadership, and impact — 15 states covered, 834,000+ houses electrified.",
+    canonical: "/about",
+  });
   const leadership = [
     {
       name: "Shray Gupta",

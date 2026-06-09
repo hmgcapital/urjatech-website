@@ -3,6 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState, useEffect, useRef } from "react";
+import { useSEO } from "@/hooks/use-seo";
 import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -351,6 +352,12 @@ interface Job {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function Careers() {
+  useSEO({
+    title: "Careers | Join the Urjatech Team",
+    description:
+      "Explore career opportunities at Urjatech. Join a growing team of 100+ professionals committed to powering India's smart grid future with innovative cable and conductor solutions.",
+    canonical: "/careers",
+  });
   const { toast } = useToast();
   const [lang, setLang] = useState<Lang>("en");
   const t = T[lang];

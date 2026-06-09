@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useSEO } from "@/hooks/use-seo";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +31,12 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 export default function Contact() {
+  useSEO({
+    title: "Contact Us | Get a Quote for Power Cables",
+    description:
+      "Contact Urjatech for business enquiries, product quotes, or vendor registration. Reach us at cable@urjatech.com or +91 8800094446. Located in Ecotech-12, Greater Noida, India.",
+    canonical: "/contact",
+  });
   const { toast } = useToast();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),

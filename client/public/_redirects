@@ -1,1 +1,3 @@
+/api/careers/jobs /.netlify/functions/careers-jobs 200
+/api/careers/apply /.netlify/functions/careers-apply 200
 /* /index.html 200

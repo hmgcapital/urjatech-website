@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = "dist/public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["server/jobs.json"]
+
+[[redirects]]
+  from = "/api/careers/jobs"
+  to = "/.netlify/functions/careers-jobs"
+  status = 200
+
+[[redirects]]
+  from = "/api/careers/apply"
+  to = "/.netlify/functions/careers-apply"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

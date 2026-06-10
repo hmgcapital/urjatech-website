@@ -6,3 +6,4 @@ data/
 vite.config.ts.*
 *.tar.gz
 .env
+dev-server*.log

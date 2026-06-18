@@ -10,6 +10,7 @@ const customersRow1 = [
   { name: "Company 8", logo: "/customers/16.gif" },
   { name: "Company 9", logo: "/customers/17.gif" },
   { name: "Universal MEP Projects & Engineering Services Limited", logo: "/customers/universal-mep.webp" },
+  { name: "Mahavitaran - Maharashtra State Electricity Distribution Co. Ltd.", logo: "/customers/mahavitaran.webp" },
 ];
 
 const customersRow2 = [
@@ -34,6 +35,7 @@ const customersRow1Mobile = [
   { name: "Company 7", logo: "/customers/15.gif" },
   { name: "Company 9", logo: "/customers/17.gif" },
   { name: "Universal MEP Projects & Engineering Services Limited", logo: "/customers/universal-mep.webp" },
+  { name: "Mahavitaran - Maharashtra State Electricity Distribution Co. Ltd.", logo: "/customers/mahavitaran.webp" },
 ];
 
 const customersRow2Mobile = [

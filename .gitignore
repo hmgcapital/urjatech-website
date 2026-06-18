@@ -8,3 +8,5 @@ vite.config.ts.*
 .env
 dev-server*.log
 .netlify/
+.claude/
+.breakpoints/

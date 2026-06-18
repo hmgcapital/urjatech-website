@@ -1,0 +1,14 @@
+# Urjatech
+
+Urjatech is a leading manufacturer of power cables and aluminum conductors — ACSR, AAC, AAAC, XLPE, ABC — serving power utilities and industries across India since 2011.
+
+## Main Pages
+- [Home](https://capitalurjatech.com/): Overview of Urjatech, key highlights, certifications, and our customers.
+- [About Us](https://capitalurjatech.com/about): Information about our company history, manufacturing capabilities, and quality commitment.
+- [Products](https://capitalurjatech.com/products): Browse our catalog of conductors and power cables, including ACSR, AAC, AAAC, ACCC, AL59, XLPE insulated cables, ABC (Aerial Bundled Cables), and Medium Voltage Covered Conductor (MVCC & HT Cables).
+- [Contact Us](https://capitalurjatech.com/contact): Address, email, phone number, and query form.
+- [Careers](https://capitalurjatech.com/careers): Job opportunities and application form.
+
+## Key Products
+- [Conductors](https://capitalurjatech.com/products): ACSR, AAC, AAAC, ACCC, AL59.
+- [Cables](https://capitalurjatech.com/products): XLPE Insulated Power Cables, Aerial Bundled Cables, Medium Voltage Covered Conductor (MVCC / HT Cables).

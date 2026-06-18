@@ -125,9 +125,9 @@ const cables = [
     ],
   },
   {
-    name: "Medium Voltage Covered Conductor",
+    name: "Medium Voltage Covered Conductor (MVCC & HT Cables)",
     description:
-      "Triple-layered insulation protects the core conductor from environmental hazards and accidental contact, dramatically reducing power outages and enhancing grid reliability for 11kv and 33kv distribution systems",
+      "Triple-layered insulation protects the core conductor from environmental hazards and accidental contact, dramatically reducing power outages and enhancing grid reliability for 11kv and 33kv distribution systems (High Tension / HT Cables)",
     image: "/products/MVCC.webp",
     specs: [
       "Anti-tracking",
@@ -191,9 +191,9 @@ const productSchema = {
 
 export default function Products() {
   useSEO({
-    title: "Products | ACSR, AAC, XLPE Cables & Conductors",
+    title: "MVCC & HT Cable Manufacturer | ACSR, AAC, XLPE Cables",
     description:
-      "Explore Urjatech's full range: ACSR, AAC, AAAC, ACCC, AL59 aluminum conductors and XLPE insulated cables, aerial bundled cables, and medium voltage covered conductors for power transmission and distribution.",
+      "Explore Urjatech's full range: ACSR, AAC, AAAC, ACCC, AL59 aluminum conductors, HT cables, XLPE insulated cables, aerial bundled cables, and medium voltage covered conductors (MVCC).",
     canonical: "/products",
   });
   return (

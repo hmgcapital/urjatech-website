@@ -28,9 +28,10 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4 mt-4">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/urja-tech/"
                 target="_blank"
                 className="text-gray-600 hover:text-blue-500 transition-colors"
+                aria-label="Visit Urjatech on LinkedIn"
               >
                 <Linkedin size={20} />
               </a>
@@ -38,18 +39,21 @@ export default function Footer() {
                 href="https://maps.google.com/?q=115,+Ecotech-12,+UP-201318,+India"
                 target="_blank"
                 className="text-gray-600 hover:text-blue-500 transition-colors"
+                aria-label="View our location on Google Maps"
               >
                 <MapPin size={20} />
               </a>
               <a
                 href="tel:+918800094446"
                 className="text-gray-600 hover:text-blue-500 transition-colors"
+                aria-label="Call Urjatech Sales"
               >
                 <Phone size={20} />
               </a>
               <a
                 href="mailto:cable@urjatech.com"
                 className="text-gray-600 hover:text-blue-500 transition-colors"
+                aria-label="Email Urjatech"
               >
                 <Mail size={20} />
               </a>

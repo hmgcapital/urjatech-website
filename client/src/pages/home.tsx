@@ -7,9 +7,9 @@ import { useSEO } from "@/hooks/use-seo";
 
 export default function Home() {
   useSEO({
-    title: "Power Cables & Conductors Manufacturer India",
+    title: "MVCC & HT Cable Manufacturer | Power Cables India",
     description:
-      "Urjatech manufactures high-quality ACSR, AAC, AAAC aluminum conductors and XLPE, ABC power cables for overhead transmission and distribution networks. Serving utilities across 15 states since 2011.",
+      "Urjatech manufactures high-quality ACSR, AAC, AAAC aluminum conductors, HT cables, and XLPE, ABC power cables for overhead transmission and distribution networks. Serving utilities across 15 states since 2011.",
     canonical: "/",
   });
   return (

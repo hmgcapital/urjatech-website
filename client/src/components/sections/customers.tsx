@@ -23,6 +23,7 @@ const customersRow2 = [
   { name: "Company 17", logo: "/customers/27.gif" },
   { name: "Company 18", logo: "/customers/28.gif" },
   { name: "MPPKVVCL", logo: "/customers/mppkvvcl.webp" },
+  { name: "Madhya Pradesh Poorv Kshetra Vidyut Vitaran Co. Ltd.", logo: "/customers/mppkvvcl-poorv.webp" },
 ];
 
 // Fewer logos for mobile display
@@ -42,6 +43,7 @@ const customersRow2Mobile = [
   { name: "Company 16", logo: "/customers/26.gif" },
   { name: "Company 18", logo: "/customers/28.gif" },
   { name: "MPPKVVCL", logo: "/customers/mppkvvcl.webp" },
+  { name: "Madhya Pradesh Poorv Kshetra Vidyut Vitaran Co. Ltd.", logo: "/customers/mppkvvcl-poorv.webp" },
 ];
 
 export default function Customers() {

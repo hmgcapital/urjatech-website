@@ -9,6 +9,7 @@ const customersRow1 = [
   { name: "Company 7", logo: "/customers/15.gif" },
   { name: "Company 8", logo: "/customers/16.gif" },
   { name: "Company 9", logo: "/customers/17.gif" },
+  { name: "Universal MEP Projects & Engineering Services Limited", logo: "/customers/universal-mep.webp" },
 ];
 
 const customersRow2 = [
@@ -21,6 +22,7 @@ const customersRow2 = [
   { name: "Company 16", logo: "/customers/26.gif" },
   { name: "Company 17", logo: "/customers/27.gif" },
   { name: "Company 18", logo: "/customers/28.gif" },
+  { name: "MPPKVVCL", logo: "/customers/mppkvvcl.webp" },
 ];
 
 // Fewer logos for mobile display
@@ -30,6 +32,7 @@ const customersRow1Mobile = [
   { name: "Company 5", logo: "/customers/13.gif" },
   { name: "Company 7", logo: "/customers/15.gif" },
   { name: "Company 9", logo: "/customers/17.gif" },
+  { name: "Universal MEP Projects & Engineering Services Limited", logo: "/customers/universal-mep.webp" },
 ];
 
 const customersRow2Mobile = [
@@ -38,6 +41,7 @@ const customersRow2Mobile = [
   { name: "Company 14", logo: "/customers/23.gif" },
   { name: "Company 16", logo: "/customers/26.gif" },
   { name: "Company 18", logo: "/customers/28.gif" },
+  { name: "MPPKVVCL", logo: "/customers/mppkvvcl.webp" },
 ];
 
 export default function Customers() {

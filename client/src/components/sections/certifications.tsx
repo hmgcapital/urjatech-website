@@ -5,6 +5,12 @@ import { CheckCircle } from "lucide-react";
 
 const certifications = [
   {
+    name: "PGCIL Approved",
+    description:
+      "Approved by Power Grid Corporation of India Limited (PGCIL) for power transmission and distribution requirements.",
+    featured: true,
+  },
+  {
     name: "BIS 7098",
     description: "Indian Standard allotted for manufacturing XLPE Power Cables - BIS 7098 (part-1)"
   },
@@ -60,10 +66,24 @@ export default function Certifications() {
               viewport={{ once: true }}
               className="h-full"
             >
-              <Card className="relative overflow-hidden group rounded-none border-2 border-gray-200 bg-white h-full flex flex-col">
+              <Card
+                className={`relative overflow-hidden group rounded-none border-2 bg-white h-full flex flex-col ${
+                  cert.featured ? "border-[#01AEEF]" : "border-gray-200"
+                }`}
+              >
                 <CardContent className="p-4 flex flex-col h-full">
                   <div className="mb-2">
-                    <Badge variant="secondary" className="bg-gray-100 text-gray-900">{cert.name}</Badge>
+                    <Badge
+                      variant="secondary"
+                      className={
+                        cert.featured
+                          ? "rounded-none bg-[#01AEEF] text-white"
+                          : "bg-gray-100 text-gray-900"
+                      }
+                    >
+                      {cert.featured && <CheckCircle className="mr-1 h-3 w-3" />}
+                      {cert.name}
+                    </Badge>
                   </div>
                   <p className="text-gray-600 text-sm flex-grow">{cert.description}</p>
                 </CardContent>

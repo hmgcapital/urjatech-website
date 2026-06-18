@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { useEffect, useState } from "react";
+import { ShieldCheck } from "lucide-react";
 
 export default function Hero() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -41,6 +43,10 @@ export default function Hero() {
           threshold={0.1}
         >
           <div className="max-w-3xl pt-16">
+            <Badge className="mb-5 rounded-none border border-[#01AEEF] bg-[#01AEEF] px-4 py-2 text-sm font-black uppercase tracking-normal text-white shadow-lg">
+              <ShieldCheck className="mr-2 h-4 w-4" />
+              PGCIL Approved
+            </Badge>
             <h1 className="text-4xl md:text-6xl font-black text-white mb-6 font-['Figtree']">
               Electrifying the world, one step at a time.
             </h1>
